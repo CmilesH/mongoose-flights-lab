@@ -2,6 +2,18 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
+const ticketSchema = new Schema({
+  seat: {
+    type: String,
+    
+  },
+price: {
+  type: Number,
+
+}
+
+})
+
 const flightSchema = new Schema({
   airline: {
     type: String,
@@ -19,13 +31,18 @@ const flightSchema = new Schema({
   },
   departs: {
     type: Date,
-    default: function() {
-      return new Date().getFullYear()
-    },
+    default: function(){
+      if (this.departs = null) {
+        console.log('funct check')
+        Date.now
+      } 
+    }
+  },
+  tickets: {
+    type: ticketSchema
   }
 
 })
-
 const Flight = mongoose.model('Flight', flightSchema)
 
 export{
