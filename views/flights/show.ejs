@@ -15,7 +15,25 @@
     <div><%= flight.flightNo %></div>
     <div>Departs: </div>
     <div><%= flight.departs %></div>
+    <div>Menu: </div>
+    <ul>
+      <% flight.menu.forEach(meal => { %>
+        <li><%= meal.name %></li>
+      <% }) %>
+    </ul>
   </section>
+  <form 
+  id="add-meal-to-menu"
+  action="/flights/<%= flight._id %>/meals"
+  method="post"
+>
+  <select name="mealId">
+    <% meals.forEach(meal => { %>
+      <option value="<%= meal._id %>"><%= meal.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Add to Menu</button>
+</form>
     <h2>Tickets</h2>
     <form 
       action="/flights/<%= flight._id %>/tickets %>"
@@ -26,7 +44,6 @@
       <input name="seat" id="seat-select" required pattern="[A-F][1-9]\d?">
       <label for="price-select">Price:</label>
       <input type="number" name="price" id="price-select" min="0" >
-      
       <button type="submit">Add Ticket</button>
     </form>
     <% if (flight.tickets.length) { %>

@@ -10,9 +10,7 @@ const ticketSchema = new Schema({
   },
 price: {
   type: Number,
-
 }
-
 })
 
 const flightSchema = new Schema({
@@ -37,7 +35,8 @@ const flightSchema = new Schema({
   },
   tickets: {
     type: [ticketSchema]
-  }
+  },
+  menu: [{ type: Schema.Types.ObjectId, ref: "Meal"}]
 
 })
 
