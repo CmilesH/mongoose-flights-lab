@@ -19,22 +19,40 @@ function newFlight(req, res) {
 }
 
 function create(req, res) {
-
+  if(req.body.departs === '') delete req.body.departs
+  
   const flight = new Flight(req.body)
-  // const dt = flight.departs;
-  // if ( dt != null){
-  // const departsDate = dt.toISOString().slice(0, 16);
-  // res.render('flights/new', {departsDate});
-// }
-  console.log(flight)
+  console.log(flight, flight.departs)
+  
+
   flight.save(function(err) {
     if (err) return res.redirect('/flights/new')
     res.redirect(`/flights`)
   })
 }
 
+function show(req, res) {
+  Flight.findById(req.params.id, function (err, flight) {
+    res.render('flights/show', { 
+      title: 'Flight Details', 
+      flight,
+    })
+  })
+}
+
+function createTicket(req, res) {
+  Flight.findById(req.params.id, function(err, flight) {
+    flight.tickets.push(req.body)
+    flight.save(function(err) {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
+
 export {
   index,
   newFlight as new,
-  create
+  create,
+  show,
+  createTicket
 }
